@@ -11,8 +11,8 @@ export default function Profile() {
   if (error) return <div>{error.message}</div>;
 
   return user ? (
-    <div>
-      <img src={user.picture} alt={user.name} className={styles.profileMisc} />
+    <div className={styles.profileMisc}>
+      <img src={user.picture} alt={user.name} style={{ width: 50 }} />
       <LogoutButton />
     </div>
   ) : null;

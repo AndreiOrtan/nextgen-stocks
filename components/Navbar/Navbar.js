@@ -10,8 +10,8 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <nav className={styles.navbar}>
-        <h3 className="header">My App</h3>
-        <div className={styles.profileMisc}>
+        <h3>My App</h3>
+        <div className={styles.profileMiscContainer}>
           {user ? <Profile /> : <LoginButton />}
         </div>
       </nav>
