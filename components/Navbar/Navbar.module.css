@@ -1,0 +1,21 @@
+.container {
+  background-color: rgb(42, 53, 110);
+  height: 50px;
+  /* display: flex; */
+}
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+  color: white;
+}
+
+.profileMiscContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  height: 50px;
+}
