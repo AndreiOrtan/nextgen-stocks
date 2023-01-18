@@ -46,7 +46,13 @@ const CompanyList = () => {
             <h4 className="text-sm text-gray-600">{company.ticker}</h4>
           </div>
           <Link
-            href="/CompanyDetails"
+            href="/portofolio"
+            className="z-10 text-white hover:text-gray-300 px-2 pt-3 rounded-md bg-indigo-600"
+          >
+            Add to portofolio
+          </Link>
+          <Link
+            href={`/details/${company.ticker}`}
             className={`relative z-10 text-white hover:text-gray-300 px-2 pt-3 rounded-md bg-indigo-600 ml-auto ${styles.showBtn}`}
             onClick={() => setSelectedTicker(company.ticker)}
           >

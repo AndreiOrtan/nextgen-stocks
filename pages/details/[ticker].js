@@ -1,14 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { useContext, useEffect, useState } from "react";
-import { CompaniesContext } from "../../components/CompaniesProvider/CompaniesContext";
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
 import getApiKey from "../../components/api/getApiKey";
+import { useRouter } from "next/router";
 
 const URL = "https://api.polygon.io";
 
 const CompanyDetails = () => {
-  const { selectedTicker } = useContext(CompaniesContext);
+  const router = useRouter();
+
   const [companyPrices, setCompanyPrices] = useState(null);
   const [companyInfo, setCopanyInfo] = useState("");
   const priceDiff = companyPrices
@@ -20,11 +21,14 @@ const CompanyDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`${URL}/v1/open-close/${selectedTicker}/2023-01-13?adjusted=true`, {
-        params: {
-          apiKey: getApiKey(),
-        },
-      })
+      .get(
+        `${URL}/v1/open-close/${router.query.ticker}/2023-01-13?adjusted=true`,
+        {
+          params: {
+            apiKey: getApiKey(),
+          },
+        }
+      )
       .then((data) => setCompanyPrices(data.data))
       .then(() => {})
       .catch((error) => {
@@ -33,17 +37,17 @@ const CompanyDetails = () => {
         }
         console.log(error.config);
       });
-  }, [selectedTicker]);
+  }, [router.query.ticker]);
 
   useEffect(() => {
     axios
-      .get(`${URL}/v3/reference/tickers/${selectedTicker}`, {
+      .get(`${URL}/v3/reference/tickers/${router.query.ticker}`, {
         params: {
           apiKey: getApiKey(),
         },
       })
       .then((data) => setCopanyInfo(data.data.results));
-  }, [selectedTicker]);
+  }, [router.query.ticker]);
 
   if (!companyInfo) {
     return <Spinner />;
@@ -54,7 +58,7 @@ const CompanyDetails = () => {
       <div className="pt-14">
         <div className="bg-gray-900 bg-opacity-75 rounded-lg shadow-lg p-6">
           <h3 className="text-lg font-medium text-white">{companyInfo.name}</h3>
-          <p className="text-gray-300">{selectedTicker}</p>
+          <p className="text-gray-300">{router.query.ticker}</p>
           <div className="price-container flex">
             <p className="text-gray-300">{`${companyPrices.close}`}</p>
             <p
