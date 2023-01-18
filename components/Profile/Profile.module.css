@@ -1,4 +1,15 @@
-.profileMisc {
+/* .profileMisc {
   display: flex;
   height: 45px;
+} */
+
+.profileContainer {
+  display: flex;
+  align-items: "center";
+  margin-right: "16px";
+}
+.profileImage {
+  width: "2px";
+  height: "2px";
+  border-radius: "50%";
 }

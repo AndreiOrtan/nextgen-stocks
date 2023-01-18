@@ -1,11 +1,14 @@
 import React from "react";
-import styles from "../../styles/Button.module.css";
+import Link from "next/link";
 
 const LoginButton = () => {
   return (
-    <button className={styles.button}>
-      <a href="/api/auth/login">Log In</a>
-    </button>
+    <Link
+      href="/api/auth/login"
+      className="relative z-10 text-white hover:text-gray-300 py-2 px-3 rounded-md bg-indigo-600"
+    >
+      Log In
+    </Link>
   );
 };
 
