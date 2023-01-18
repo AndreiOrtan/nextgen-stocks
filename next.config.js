@@ -1,10 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
-  env: {
-    MONGO_URI:
-      "mongodb+srv://andreiortan:0iRl87LjiVkDhpbf@cluster0.kxrncjl.mongodb.net/?retryWrites=true&w=majority",
-  },
   images: {
     remotePatterns: [
       {

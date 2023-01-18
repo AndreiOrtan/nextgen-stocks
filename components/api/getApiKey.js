@@ -1,13 +1,13 @@
-const API_KEY_1 = "sjapce6gjgDFgpRHlc7wrzhza_9dbFji";
-const API_KEY_2 = "9TPV0rQTkwUPIDiOSjwFQVvp7wYrFYby";
-const API_KEY_3 = "VTwDsU6s6spJdOcQ8z2Sf43Pz9Ns1TdA";
-
-const keys = [API_KEY_1, API_KEY_2, API_KEY_3];
+const keys = [
+  process.env.NEXT_PUBLIC_API_KEY_1,
+  process.env.NEXT_PUBLIC_API_KEY_2,
+  process.env.NEXT_PUBLIC_API_KEY_3,
+];
 
 let apiKeyCount = 0;
 let counter = 0;
 
-export function keyProvider() {
+export default function getApiKey() {
   if (counter % 5 === 0 && counter !== 0) {
     apiKeyCount++;
   }

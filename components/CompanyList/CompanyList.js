@@ -4,7 +4,7 @@ import styles from "./CompanyList.module.css";
 import Link from "next/link";
 import { CompaniesContext } from "../CompaniesProvider/CompaniesContext";
 import Spinner from "../Spinner/Spinner";
-import { keyProvider } from "../api/keyProvider";
+import getApiKey from "../api/getApiKey";
 
 const URL = "https://api.polygon.io";
 
@@ -21,7 +21,7 @@ const CompanyList = () => {
           order: "desc",
           market: "stocks",
           search: searchText,
-          apiKey: keyProvider(),
+          apiKey: getApiKey(),
         },
       })
       .then((data) => {

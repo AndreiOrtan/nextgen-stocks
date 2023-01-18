@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { CompaniesContext } from "../../components/CompaniesProvider/CompaniesContext";
 import axios from "axios";
 import Spinner from "../../components/Spinner/Spinner";
-import { keyProvider } from "../../components/api/keyProvider";
+import getApiKey from "../../components/api/getApiKey";
 
 const URL = "https://api.polygon.io";
 
@@ -22,7 +22,7 @@ const CompanyDetails = () => {
     axios
       .get(`${URL}/v1/open-close/${selectedTicker}/2023-01-13?adjusted=true`, {
         params: {
-          apiKey: keyProvider(),
+          apiKey: getApiKey(),
         },
       })
       .then((data) => setCompanyPrices(data.data))
@@ -39,7 +39,7 @@ const CompanyDetails = () => {
     axios
       .get(`${URL}/v3/reference/tickers/${selectedTicker}`, {
         params: {
-          apiKey: keyProvider(),
+          apiKey: getApiKey(),
         },
       })
       .then((data) => setCopanyInfo(data.data.results));
