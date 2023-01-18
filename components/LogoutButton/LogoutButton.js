@@ -1,11 +1,14 @@
+import Link from "next/link";
 import React from "react";
-import styles from "../../styles/Button.module.css";
 
 const LogoutButton = () => {
   return (
-    <button className={styles.button}>
-      <a href="/api/auth/logout">Logout</a>
-    </button>
+    <Link
+      href="/api/auth/logout"
+      className="relative z-10 text-white hover:text-gray-300 py-2 px-3 rounded-md bg-indigo-600"
+    >
+      Logout
+    </Link>
   );
 };
 

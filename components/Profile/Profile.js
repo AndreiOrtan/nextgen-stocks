@@ -11,8 +11,13 @@ export default function Profile() {
   if (error) return <div>{error.message}</div>;
 
   return user ? (
-    <div className={styles.profileMisc}>
-      <img src={user.picture} alt={user.name} style={{ width: 50 }} />
+    <div className="flex items-center">
+      <img
+        src={user.picture}
+        alt={user.name}
+        className="h-10 w-10 rounded-full mr-4"
+        referrerPolicy="no-referrer"
+      />
       <LogoutButton />
     </div>
   ) : null;
