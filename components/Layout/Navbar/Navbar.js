@@ -14,7 +14,7 @@ const Navbar = () => {
     >
       <nav className={`container mx-auto flex ${styles.navbar}`}>
         <h3 className="font-sans text-xl font-semibold text-white">
-          <Link href="/">My App</Link>
+          <Link href="/">Stockify</Link>
         </h3>
         <SearchBar />
         <div className="ml-auto">{user ? <Profile /> : <LoginButton />}</div>
