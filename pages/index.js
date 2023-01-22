@@ -1,7 +1,8 @@
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import Head from "next/head";
 import CompanyList from "../components/CompanyList/CompanyList";
 
-export default function Home() {
+function Home() {
   return (
     <>
       <Head>
@@ -14,3 +15,5 @@ export default function Home() {
     </>
   );
 }
+
+export default withPageAuthRequired(Home);

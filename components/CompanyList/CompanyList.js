@@ -39,7 +39,7 @@ const CompanyList = () => {
       return (
         <div
           key={company.name + company.ticker}
-          className={`bg-transparent p-4 text-white text-opacity-75 border-b-2 border-gray-600 ${styles.parrentDiv} ${styles.highlight} flex`}
+          className={`rounded bg-transparent p-4 text-white text-opacity-75 border border-gray-800 ${styles.parrentDiv} ${styles.highlight} flex`}
         >
           <div>
             <h2 className="text-lg font-medium">{company.name}</h2>
@@ -62,7 +62,7 @@ const CompanyList = () => {
       );
     });
 
-  return <div className="pt-14">{renderedCompanies}</div>;
+  return <div className="space-y-4 p-4 mt-32">{renderedCompanies}</div>;
 };
 
 export default CompanyList;
