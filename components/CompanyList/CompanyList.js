@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import styles from "./CompanyList.module.css";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import { CompaniesContext } from "../CompaniesProvider/CompaniesContext";
 import Spinner from "../Spinner/Spinner";
 import getApiKey from "../api/getApiKey";
@@ -9,6 +9,7 @@ import getApiKey from "../api/getApiKey";
 const URL = "https://api.polygon.io";
 
 const CompanyList = () => {
+  const router = useRouter();
   const { setSelectedTicker, companies, setCompanies, searchText } =
     useContext(CompaniesContext);
   useEffect(() => {
@@ -33,6 +34,11 @@ const CompanyList = () => {
     return <Spinner />;
   }
 
+  function companyDetailsHandler(comp) {
+    setSelectedTicker(comp.ticker);
+    router.push(`details/` + comp.ticker);
+  }
+
   const renderedCompanies =
     companies &&
     companies.map((company) => {
@@ -40,24 +46,12 @@ const CompanyList = () => {
         <div
           key={company.name + company.ticker}
           className={`rounded bg-transparent p-4 text-white text-opacity-75 border border-gray-800 ${styles.parrentDiv} ${styles.highlight} flex`}
+          onClick={() => companyDetailsHandler(company)}
         >
           <div>
             <h2 className="text-lg font-medium">{company.name}</h2>
             <h4 className="text-sm text-gray-600">{company.ticker}</h4>
           </div>
-          <Link
-            href="/portofolio"
-            className="z-10 text-white hover:text-gray-300 px-2 pt-3 rounded-md bg-indigo-600"
-          >
-            Add to portofolio
-          </Link>
-          <Link
-            href={`/details/${company.ticker}`}
-            className={`relative z-10 text-white hover:text-gray-300 px-2 pt-3 rounded-md bg-indigo-600 ml-auto ${styles.showBtn}`}
-            onClick={() => setSelectedTicker(company.ticker)}
-          >
-            More details
-          </Link>
         </div>
       );
     });
