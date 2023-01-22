@@ -41,6 +41,7 @@ const SearchBar = () => {
           placeholder="Search for Companies or tickers.."
           className="md:w-80 sm:min-w-min h-10 py-3 pl-12 pr-4 text-gray-500 border rounded-md outline-none bg-gray-50 hover:bg-gray-200 focus:bg-white focus:border-indigo-600 transition duration-150 ease-in-out"
           onChange={(e) => setDebouncedText(e.target.value)}
+          value={debouncedText}
         />
       </div>
     </form>
