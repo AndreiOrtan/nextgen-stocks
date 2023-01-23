@@ -8,6 +8,7 @@ import Spinner from "../Spinner/Spinner";
 import getApiKey from "../api/getApiKey";
 import { IconContext } from "react-icons";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { BsStar } from "react-icons/bs";
 
 const URL = "https://api.polygon.io";
 
@@ -50,7 +51,9 @@ const CompanyList = () => {
     return <Spinner />;
   }
   function companyDetailsHandler(e, comp) {
-    if (e.target.nodeName === "svg" || "path") {
+    console.log(e.target);
+    if (e.target.tagName === "path" || e.target.tagName === "svg") {
+      console.log("zzzz");
       return;
     }
     setSelectedTicker(comp.ticker);
@@ -93,6 +96,7 @@ const CompanyList = () => {
               )}
             </div>
           </IconContext.Provider>
+          <BsStar />
         </div>
       );
     });
