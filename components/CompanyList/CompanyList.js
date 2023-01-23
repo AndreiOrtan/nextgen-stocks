@@ -1,14 +1,18 @@
+/* eslint-disable @next/next/no-img-element */
 import axios from "axios";
-import { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styles from "./CompanyList.module.css";
 import { useRouter } from "next/router";
 import { CompaniesContext } from "../CompaniesProvider/CompaniesContext";
 import Spinner from "../Spinner/Spinner";
 import getApiKey from "../api/getApiKey";
+import { IconContext } from "react-icons";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 const URL = "https://api.polygon.io";
 
 const CompanyList = () => {
+  const [favoriteTickers, setFavoriteTickers] = useState([]);
   const router = useRouter();
   const { setSelectedTicker, companies, setCompanies, searchText } =
     useContext(CompaniesContext);
@@ -37,10 +41,23 @@ const CompanyList = () => {
   if (!companies && searchText) {
     return <Spinner />;
   }
-  function companyDetailsHandler(comp) {
+  function companyDetailsHandler(e, comp) {
+    if (e.target.nodeName === "svg" || "path") {
+      return;
+    }
     setSelectedTicker(comp.ticker);
     router.push(`details/` + comp.ticker);
   }
+
+  const handleFavoriteTickers = (ticker) => {
+    if (favoriteTickers.includes(ticker)) {
+      setFavoriteTickers(
+        favoriteTickers.filter((selectedTicker) => selectedTicker !== ticker)
+      );
+    } else {
+      setFavoriteTickers([...favoriteTickers, ticker]);
+    }
+  };
 
   const renderedCompanies =
     companies &&
@@ -48,13 +65,25 @@ const CompanyList = () => {
       return (
         <div
           key={company.name + company.ticker}
-          className={`rounded bg-transparent p-4 text-white text-opacity-75 border border-gray-800 ${styles.parrentDiv} ${styles.highlight} flex`}
-          onClick={() => companyDetailsHandler(company)}
+          className={`rounded bg-transparent p-4 text-white text-opacity-75 border border-gray-800 items-center ${styles.parrentDiv} ${styles.highlight} flex`}
+          onClick={(e) => companyDetailsHandler(e, company)}
         >
           <div>
             <h2 className="text-lg font-medium">{company.name}</h2>
             <h4 className="text-sm text-gray-600">{company.ticker}</h4>
           </div>
+          <IconContext.Provider value={{ size: "25px" }}>
+            <div
+              className={`ml-auto ${styles.star}`}
+              onClick={() => handleFavoriteTickers(company.ticker)}
+            >
+              {favoriteTickers.includes(company.ticker) ? (
+                <AiFillStar />
+              ) : (
+                <AiOutlineStar />
+              )}
+            </div>
+          </IconContext.Provider>
         </div>
       );
     });
@@ -71,7 +100,7 @@ const CompanyList = () => {
           to your favorites, and view additional information and charts on their
           performance.
         </p>
-        <p class="text-center text-white mb-8 text-2xl font-medium">
+        <p className="text-center text-white mb-8 text-2xl font-medium">
           Begin your journey by using our powerful search bar to find the
           companies you are interested in and{" "}
           <span className="text-indigo-500">start tracking them today</span>.

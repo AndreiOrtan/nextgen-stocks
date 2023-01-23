@@ -28,9 +28,7 @@ const CompanyDetails = () => {
     }
     axios
       .get(
-        `${URL}/v1/open-close/${
-          router.query.ticker
-        }/${getFormattedPreviousBusinessDay()}?adjusted=true`,
+        `${URL}/v1/open-close/${router.query.ticker}/2023-01-13?adjusted=true`,
         {
           params: {
             apiKey: getApiKey(),
