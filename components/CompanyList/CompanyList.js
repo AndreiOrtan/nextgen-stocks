@@ -12,10 +12,18 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 const URL = "https://api.polygon.io";
 
 const CompanyList = () => {
-  const [favoriteTickers, setFavoriteTickers] = useState([]);
   const router = useRouter();
-  const { setSelectedTicker, companies, setCompanies, searchText } =
-    useContext(CompaniesContext);
+  const {
+    setSelectedTicker,
+    companies,
+    setCompanies,
+    searchText,
+    addToFavorites,
+    deleteItem,
+    favorites,
+  } = useContext(CompaniesContext);
+  const [favoriteTickers, setFavoriteTickers] = useState([]);
+
   useEffect(() => {
     if (!searchText) {
       return;
@@ -77,10 +85,11 @@ const CompanyList = () => {
               className={`ml-auto ${styles.star}`}
               onClick={() => handleFavoriteTickers(company.ticker)}
             >
-              {favoriteTickers.includes(company.ticker) ? (
-                <AiFillStar />
+              {favoriteTickers.includes(company.ticker) ||
+              favorites.find((favComp) => favComp.ticker === company.ticker) ? (
+                <AiFillStar onClick={() => deleteItem(company.ticker)} />
               ) : (
-                <AiOutlineStar />
+                <AiOutlineStar onClick={() => addToFavorites(company)} />
               )}
             </div>
           </IconContext.Provider>

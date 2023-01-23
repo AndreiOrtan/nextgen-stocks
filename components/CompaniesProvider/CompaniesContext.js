@@ -9,6 +9,20 @@ export const Provider = ({ children }) => {
   const [searchText, setSearchText] = useState("");
   const [favorites, setFavorites] = useState(getFavorites());
 
+  const addToFavorites = (company) => {
+    // construiesti arrayul nou
+    const newItems = [...favorites, company];
+    saveFavorites(newItems);
+    setFavorites(newItems);
+    console.log(favorites);
+  };
+
+  const deleteItem = (ticker) => {
+    // construiesti arrayul nou
+    const newItems = favorites.filter((item) => item.ticker !== ticker);
+    saveFavorites(newItems);
+    setFavorites(newItems);
+  };
   const contextValues = {
     selectedTicker,
     setSelectedTicker,
@@ -16,19 +30,9 @@ export const Provider = ({ children }) => {
     setCompanies,
     searchText,
     setSearchText,
-  };
-
-  const addToFavorites = (company) => {
-    // construiesti arrayul nou
-    // newItems = [...favorites, company]
-    saveFavorites(newItems);
-  };
-
-  const deleteItem = (ticker) => {
-    // construiesti arrayul nou
-    // newItems = favorites.filter(item => item.ticker !== ticker)
-
-    saveFavorites(newItems);
+    favorites,
+    addToFavorites,
+    deleteItem,
   };
   return (
     <CompaniesContext.Provider value={contextValues}>

@@ -20,7 +20,10 @@ const SearchBar = () => {
   }, [debouncedText, setSearchText]);
 
   return router.pathname === "/" ? (
-    <form className="max-w-sm px-4 ml-auto">
+    <form
+      className="max-w-sm px-4 ml-auto"
+      onSubmit={(e) => e.preventDefault()}
+    >
       <div className="relative">
         <svg
           xmlns="http://www.w3.org/2000/svg"
