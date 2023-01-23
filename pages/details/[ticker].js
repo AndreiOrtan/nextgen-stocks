@@ -12,7 +12,6 @@ const URL = "https://api.polygon.io";
 
 const CompanyDetails = () => {
   const router = useRouter();
-
   const [companyPrices, setCompanyPrices] = useState(null);
   const [companyInfo, setCompanyInfo] = useState("");
   const priceDiff = companyPrices
@@ -28,7 +27,9 @@ const CompanyDetails = () => {
     }
     axios
       .get(
-        `${URL}/v1/open-close/${router.query.ticker}/2023-01-13?adjusted=true`,
+        `${URL}/v1/open-close/${
+          router.query.ticker
+        }/${getFormattedPreviousBusinessDay()}?adjusted=true`,
         {
           params: {
             apiKey: getApiKey(),

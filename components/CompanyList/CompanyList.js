@@ -8,7 +8,6 @@ import Spinner from "../Spinner/Spinner";
 import getApiKey from "../api/getApiKey";
 import { IconContext } from "react-icons";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { BsStar } from "react-icons/bs";
 
 const URL = "https://api.polygon.io";
 
@@ -51,9 +50,7 @@ const CompanyList = () => {
     return <Spinner />;
   }
   function companyDetailsHandler(e, comp) {
-    console.log(e.target);
     if (e.target.tagName === "path" || e.target.tagName === "svg") {
-      console.log("zzzz");
       return;
     }
     setSelectedTicker(comp.ticker);
@@ -92,11 +89,18 @@ const CompanyList = () => {
               favorites.find((favComp) => favComp.ticker === company.ticker) ? (
                 <AiFillStar onClick={() => deleteItem(company.ticker)} />
               ) : (
-                <AiOutlineStar onClick={() => addToFavorites(company)} />
+                <AiOutlineStar
+                  onClick={() =>
+                    addToFavorites({
+                      ticker: company.ticker,
+                      name: company.name,
+                      added_on: new Date().toLocaleDateString(),
+                    })
+                  }
+                />
               )}
             </div>
           </IconContext.Provider>
-          <BsStar />
         </div>
       );
     });

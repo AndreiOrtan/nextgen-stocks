@@ -10,6 +10,7 @@ const FavoritesCompanies = () => {
       <div key={company.ticker}>
         <h1>{company.name}</h1>
         <h2>{company.ticker}</h2>
+        <p>{company.added_on}</p>
       </div>
     );
   });

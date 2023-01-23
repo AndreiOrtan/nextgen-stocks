@@ -9,9 +9,9 @@ const isBusinessDay = (date) => {
 export const getFormattedPreviousBusinessDay = () => {
   const date = new Date();
 
-  while (!isBusinessDay(date)) {
+  do {
     date.setDate(date.getDate() - 1);
-  }
+  } while (!isBusinessDay(date));
 
   const month = date.getMonth() + 1;
   const formattedMonth = month.toLocaleString("en-US", {
