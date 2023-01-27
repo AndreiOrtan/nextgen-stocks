@@ -14,6 +14,8 @@ const CompanyDetails = () => {
   const router = useRouter();
   const [companyPrices, setCompanyPrices] = useState(null);
   const [companyInfo, setCompanyInfo] = useState("");
+  const [img, setImg] = useState(null);
+  console.log(companyInfo);
   const priceDiff = companyPrices
     ? (
         ((companyPrices.close - companyPrices.open) / companyPrices.close) *
@@ -58,10 +60,27 @@ const CompanyDetails = () => {
       .then((data) => setCompanyInfo(data.data.results));
   }, [router.query.ticker]);
 
+  const fetchImage = async () => {
+    if (!companyInfo.branding) {
+      return;
+    }
+    const IMG_URL = `${companyInfo.branding.logo_url}`;
+    const res = await fetch(IMG_URL, {
+      headers: { Authorization: `Bearer VTwDsU6s6spJdOcQ8z2Sf43Pz9Ns1TdA` },
+    });
+    const imageBlob = await res.blob();
+    const imageObjectURL = window.URL.createObjectURL(imageBlob);
+    setImg(imageObjectURL);
+  };
+
   useEffect(() => {
     fetchTickerDetails();
     fetchTickerPrice();
   }, [fetchTickerDetails, fetchTickerPrice]);
+
+  useEffect(() => {
+    fetchImage();
+  }, [companyInfo]);
 
   if (!companyInfo && !companyPrices) {
     return <Spinner />;
@@ -69,22 +88,34 @@ const CompanyDetails = () => {
 
   return (
     companyPrices && (
-      <div className="pt-14 mt-32">
-        <div className="bg-gray-900 bg-opacity-75 rounded-lg shadow-lg p-6">
-          <h3 className="text-lg font-medium text-white">{companyInfo.name}</h3>
-          <p className="text-gray-300">{router.query.ticker}</p>
-          <div className="price-container flex">
-            <p className="text-gray-300">{`${companyPrices.close}`}</p>
-            <p
-              className={`${priceDiff < 0 ? "text-red-900" : "text-green-900"}`}
-            >
-              {`(${priceDiff} %)`}
-            </p>
+      <div className="pt-8 mt-24">
+        <div className="bg-gray-900 bg-opacity-75 rounded-lg shadow-lg p-6 flex h-80">
+          <div>
+            <h3 className="text-lg font-medium text-white">
+              {companyInfo.name}
+            </h3>
+            <p className="text-gray-300">{router.query.ticker}</p>
+            <div className="price-container flex">
+              <p className="text-gray-300">{`${companyPrices.close}`}</p>
+              <p
+                className={`${
+                  priceDiff < 0 ? "text-red-900" : "text-green-900"
+                }`}
+              >
+                {`(${priceDiff} %)`}
+              </p>
+            </div>
+            <p className="text-gray-400">{companyInfo.description}</p>
           </div>
-          {router.query.ticker ? (
-            <TradingViewWidget ticker={router.query.ticker} />
-          ) : null}
+          <img
+            src={img}
+            alt={`${companyInfo.name}`}
+            className="w-16 h-16 ml-auto"
+          ></img>
         </div>
+        {router.query.ticker ? (
+          <TradingViewWidget ticker={router.query.ticker} />
+        ) : null}
       </div>
     )
   );
@@ -94,3 +125,30 @@ export default withPageAuthRequired(CompanyDetails);
 
 //https://api.polygon.io/v1/open-close/DSJA/2023-01-13?adjusted=true&apiKey=sjapce6gjgDFgpRHlc7wrzhza_9dbFji
 //https://api.polygon.io/v1/open-close/DSJA/2023-01-13?adjusted=true&apiKey=sjapce6gjgDFgpRHlc7wrzhza_9dbFji
+
+// const mongoose = require('mongoose');
+
+// const userSchema = new mongoose.Schema({
+//   id: {
+//     type: String,
+//     required: true
+//   },
+//   stocks: [{
+//     name: {
+//       type: String,
+//       required: true
+//     },
+//     ticker: {
+//       type: String,
+//       required: true
+//     },
+//     added_on: {
+//       type: String,
+//       required: true
+//     }
+//   }]
+// });
+
+// const User = mongoose.model('User', userSchema);
+
+// module.exports = User;

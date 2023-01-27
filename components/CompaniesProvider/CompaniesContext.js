@@ -33,6 +33,7 @@ export const Provider = ({ children }) => {
     favorites,
     addToFavorites,
     deleteItem,
+    setFavorites,
   };
   return (
     <CompaniesContext.Provider value={contextValues}>

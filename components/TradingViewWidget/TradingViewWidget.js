@@ -50,16 +50,13 @@ const TradingViewWidget = ({ ticker }) => {
 
   return (
     <div>
-      <div id="tradingview_e415f" className="h-96" />
+      <div id="tradingview_e415f" className="h-80" />
       <div className="tradingview-widget-copyright">
         <a
           href="https://www.tradingview.com/symbols/NASDAQ-AAPL/"
           rel="noreferrer"
           target="_blank"
-        >
-          <span className="blue-text">AAPL stock chart ZZZZ Andrei</span>
-        </a>{" "}
-        by TradingView
+        ></a>{" "}
       </div>
     </div>
   );

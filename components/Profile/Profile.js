@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
-import styles from "./Profile.module.css";
 import LogoutButton from "../LogoutButton/LogoutButton";
 
 export default function Profile() {

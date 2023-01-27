@@ -17,8 +17,3 @@ export default function getApiKey() {
   counter++;
   return keys[apiKeyCount];
 }
-
-// export function getApiKey(requestCount) {
-//   requestCount++;
-//   return keys[requestCount % 3];
-// }

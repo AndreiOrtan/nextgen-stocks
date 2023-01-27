@@ -106,7 +106,7 @@ const CompanyList = () => {
     });
 
   return !searchText ? (
-    <section className="py-8 mt-32">
+    <section className="py-8 mt-18">
       <div className="container mx-auto">
         <h1 className="text-3xl font-medium text-center text-white mb-8">
           Welcome to Stockify
