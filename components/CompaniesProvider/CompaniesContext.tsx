@@ -1,31 +1,43 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { getFavorites, saveFavorites } from "../../services/favorites-api";
+import { ICompaniesContext } from "../../types";
 
-export const CompaniesContext = createContext(null);
+const defaultValues = {
+  companies: [],
+  setCompanies: () => {},
+  searchText: "",
+  setSearchText: () => {},
+  favorites: [],
+  deleteItem: () => {},
+  addToFavorites: () => {},
+};
 
-export const Provider = ({ children }) => {
-  const [companies, setCompanies] = useState(null);
-  const [selectedTicker, setSelectedTicker] = useState("");
+export const CompaniesContext = createContext<ICompaniesContext>(defaultValues);
+
+export const Provider = ({ children }: any) => {
+  const [companies, setCompanies] = useState([]);
+
   const [searchText, setSearchText] = useState("");
   const [favorites, setFavorites] = useState(getFavorites());
+  console.log(favorites);
 
-  const addToFavorites = (company) => {
+  const addToFavorites = (company: any) => {
     // construiesti arrayul nou
     const newItems = [...favorites, company];
     saveFavorites(newItems);
     setFavorites(newItems);
-    console.log(favorites);
   };
 
-  const deleteItem = (ticker) => {
+  const deleteItem = (ticker: any) => {
     // construiesti arrayul nou
-    const newItems = favorites.filter((item) => item.ticker !== ticker);
+    const newItems = favorites.filter(
+      (item: { ticker: any }) => item.ticker !== ticker
+    );
     saveFavorites(newItems);
     setFavorites(newItems);
   };
+
   const contextValues = {
-    selectedTicker,
-    setSelectedTicker,
     companies,
     setCompanies,
     searchText,
@@ -33,7 +45,6 @@ export const Provider = ({ children }) => {
     favorites,
     addToFavorites,
     deleteItem,
-    setFavorites,
   };
   return (
     <CompaniesContext.Provider value={contextValues}>

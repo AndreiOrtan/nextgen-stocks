@@ -4,15 +4,12 @@ import { useRouter } from "next/router";
 
 const SearchBar = () => {
   const router = useRouter();
-
   const [debouncedText, setDebouncedText] = useState("");
   const { setSearchText } = useContext(CompaniesContext);
 
   useEffect(() => {
     const timerId = setTimeout(() => {
-      console.log("ran");
       setSearchText(debouncedText);
-      //   window.scrollY = 0;
     }, 1000);
     return () => {
       clearTimeout(timerId);

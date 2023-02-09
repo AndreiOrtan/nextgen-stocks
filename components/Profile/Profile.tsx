@@ -12,8 +12,8 @@ export default function Profile() {
   return user ? (
     <div className="flex items-center">
       <img
-        src={user.picture}
-        alt={user.name}
+        src={user.picture ? user.picture : ""}
+        alt={user.name ? user.name : ""}
         className="h-10 w-10 rounded-full mr-4"
         referrerPolicy="no-referrer"
       />

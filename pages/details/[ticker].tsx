@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { getFormattedPreviousBusinessDay } from "../../helpers/getPreviousWorkingDay";
 import TradingViewWidget from "../../components/TradingViewWidget";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
+import React from "react";
 
 const URL = "https://api.polygon.io";
 
@@ -15,7 +16,7 @@ const CompanyDetails = () => {
   const [companyPrices, setCompanyPrices] = useState(null);
   const [companyInfo, setCompanyInfo] = useState("");
   const [img, setImg] = useState(null);
-  console.log(companyInfo);
+
   const priceDiff = companyPrices
     ? (
         ((companyPrices.close - companyPrices.open) / companyPrices.close) *
@@ -99,7 +100,7 @@ const CompanyDetails = () => {
               <p className="text-gray-300">{`${companyPrices.close}`}</p>
               <p
                 className={`${
-                  priceDiff < 0 ? "text-red-900" : "text-green-900"
+                  +priceDiff < 0 ? "text-red-900" : "text-green-900"
                 }`}
               >
                 {`(${priceDiff} %)`}
@@ -122,33 +123,3 @@ const CompanyDetails = () => {
 };
 
 export default withPageAuthRequired(CompanyDetails);
-
-//https://api.polygon.io/v1/open-close/DSJA/2023-01-13?adjusted=true&apiKey=sjapce6gjgDFgpRHlc7wrzhza_9dbFji
-//https://api.polygon.io/v1/open-close/DSJA/2023-01-13?adjusted=true&apiKey=sjapce6gjgDFgpRHlc7wrzhza_9dbFji
-
-// const mongoose = require('mongoose');
-
-// const userSchema = new mongoose.Schema({
-//   id: {
-//     type: String,
-//     required: true
-//   },
-//   stocks: [{
-//     name: {
-//       type: String,
-//       required: true
-//     },
-//     ticker: {
-//       type: String,
-//       required: true
-//     },
-//     added_on: {
-//       type: String,
-//       required: true
-//     }
-//   }]
-// });
-
-// const User = mongoose.model('User', userSchema);
-
-// module.exports = User;

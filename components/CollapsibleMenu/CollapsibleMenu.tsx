@@ -1,6 +1,7 @@
 import { useState } from "react";
-import FavoritesCompanies from "../components/FavoritesCompanies";
+import FavoritesCompanies from "../FavoritesCompanies";
 import { FiChevronsDown, FiChevronsUp } from "react-icons/fi";
+import React from "react";
 
 const CollapsibleMenu = () => {
   const [open, setOpen] = useState(false);
