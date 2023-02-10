@@ -13,9 +13,13 @@ const URL = "https://api.polygon.io";
 
 const CompanyDetails = () => {
   const router = useRouter();
-  const [companyPrices, setCompanyPrices] = useState(null);
-  const [companyInfo, setCompanyInfo] = useState("");
-  const [img, setImg] = useState(null);
+  const [companyPrices, setCompanyPrices] = useState({ close: 1, open: 1 });
+  const [companyInfo, setCompanyInfo] = useState({
+    branding: { logo_url: "" },
+    name: "",
+    description: "",
+  });
+  const [img, setImg] = useState("");
 
   const priceDiff = companyPrices
     ? (
@@ -61,27 +65,26 @@ const CompanyDetails = () => {
       .then((data) => setCompanyInfo(data.data.results));
   }, [router.query.ticker]);
 
-  const fetchImage = async () => {
-    if (!companyInfo.branding) {
-      return;
-    }
-    const IMG_URL = `${companyInfo.branding.logo_url}`;
-    const res = await fetch(IMG_URL, {
-      headers: { Authorization: `Bearer VTwDsU6s6spJdOcQ8z2Sf43Pz9Ns1TdA` },
-    });
-    const imageBlob = await res.blob();
-    const imageObjectURL = window.URL.createObjectURL(imageBlob);
-    setImg(imageObjectURL);
-  };
-
   useEffect(() => {
     fetchTickerDetails();
     fetchTickerPrice();
   }, [fetchTickerDetails, fetchTickerPrice]);
 
   useEffect(() => {
+    const fetchImage = async () => {
+      if (!companyInfo.branding) {
+        return;
+      }
+      const IMG_URL = `${companyInfo.branding.logo_url}`;
+      const res = await fetch(IMG_URL, {
+        headers: { Authorization: `Bearer VTwDsU6s6spJdOcQ8z2Sf43Pz9Ns1TdA` },
+      });
+      const imageBlob = await res.blob();
+      const imageObjectURL = window.URL.createObjectURL(imageBlob);
+      setImg(imageObjectURL);
+    };
     fetchImage();
-  }, [companyInfo]);
+  }, [companyInfo.branding]);
 
   if (!companyInfo && !companyPrices) {
     return <Spinner />;
