@@ -1,0 +1,16 @@
+.star {
+  visibility: hidden;
+  size: 25px;
+}
+.parrentDiv:hover .star {
+  visibility: visible;
+}
+
+.highlight:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+.faStar {
+  font-size: 20px;
+}

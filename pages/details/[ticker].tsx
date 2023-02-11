@@ -7,15 +7,20 @@ import { useRouter } from "next/router";
 import { getFormattedPreviousBusinessDay } from "../../helpers/getPreviousWorkingDay";
 import TradingViewWidget from "../../components/TradingViewWidget";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
+import React from "react";
 
 const URL = "https://api.polygon.io";
 
 const CompanyDetails = () => {
   const router = useRouter();
-  const [companyPrices, setCompanyPrices] = useState(null);
-  const [companyInfo, setCompanyInfo] = useState("");
-  const [img, setImg] = useState(null);
-  console.log(companyInfo);
+  const [companyPrices, setCompanyPrices] = useState({ close: 1, open: 1 });
+  const [companyInfo, setCompanyInfo] = useState({
+    branding: { logo_url: "" },
+    name: "",
+    description: "",
+  });
+  const [img, setImg] = useState("");
+
   const priceDiff = companyPrices
     ? (
         ((companyPrices.close - companyPrices.open) / companyPrices.close) *
@@ -60,27 +65,26 @@ const CompanyDetails = () => {
       .then((data) => setCompanyInfo(data.data.results));
   }, [router.query.ticker]);
 
-  const fetchImage = async () => {
-    if (!companyInfo.branding) {
-      return;
-    }
-    const IMG_URL = `${companyInfo.branding.logo_url}`;
-    const res = await fetch(IMG_URL, {
-      headers: { Authorization: `Bearer VTwDsU6s6spJdOcQ8z2Sf43Pz9Ns1TdA` },
-    });
-    const imageBlob = await res.blob();
-    const imageObjectURL = window.URL.createObjectURL(imageBlob);
-    setImg(imageObjectURL);
-  };
-
   useEffect(() => {
     fetchTickerDetails();
     fetchTickerPrice();
   }, [fetchTickerDetails, fetchTickerPrice]);
 
   useEffect(() => {
+    const fetchImage = async () => {
+      if (!companyInfo.branding) {
+        return;
+      }
+      const IMG_URL = `${companyInfo.branding.logo_url}`;
+      const res = await fetch(IMG_URL, {
+        headers: { Authorization: `Bearer VTwDsU6s6spJdOcQ8z2Sf43Pz9Ns1TdA` },
+      });
+      const imageBlob = await res.blob();
+      const imageObjectURL = window.URL.createObjectURL(imageBlob);
+      setImg(imageObjectURL);
+    };
     fetchImage();
-  }, [companyInfo]);
+  }, [companyInfo.branding]);
 
   if (!companyInfo && !companyPrices) {
     return <Spinner />;
@@ -99,7 +103,7 @@ const CompanyDetails = () => {
               <p className="text-gray-300">{`${companyPrices.close}`}</p>
               <p
                 className={`${
-                  priceDiff < 0 ? "text-red-900" : "text-green-900"
+                  +priceDiff < 0 ? "text-red-900" : "text-green-900"
                 }`}
               >
                 {`(${priceDiff} %)`}
@@ -122,33 +126,3 @@ const CompanyDetails = () => {
 };
 
 export default withPageAuthRequired(CompanyDetails);
-
-//https://api.polygon.io/v1/open-close/DSJA/2023-01-13?adjusted=true&apiKey=sjapce6gjgDFgpRHlc7wrzhza_9dbFji
-//https://api.polygon.io/v1/open-close/DSJA/2023-01-13?adjusted=true&apiKey=sjapce6gjgDFgpRHlc7wrzhza_9dbFji
-
-// const mongoose = require('mongoose');
-
-// const userSchema = new mongoose.Schema({
-//   id: {
-//     type: String,
-//     required: true
-//   },
-//   stocks: [{
-//     name: {
-//       type: String,
-//       required: true
-//     },
-//     ticker: {
-//       type: String,
-//       required: true
-//     },
-//     added_on: {
-//       type: String,
-//       required: true
-//     }
-//   }]
-// });
-
-// const User = mongoose.model('User', userSchema);
-
-// module.exports = User;
