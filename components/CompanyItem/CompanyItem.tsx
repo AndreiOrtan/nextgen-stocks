@@ -4,23 +4,25 @@ import styles from "./CompanyList.module.css";
 import { CompaniesContext } from "../CompaniesProvider/CompaniesContext";
 import { useContext, useState } from "react";
 import { useRouter } from "next/router";
+import { CompanyItemComponent, ICompanyItem } from "../../types";
 
-const CompanyItem = ({ company, date }: any) => {
+const CompanyItem = ({ company, date }: CompanyItemComponent) => {
   const [favoriteTickers, setFavoriteTickers] = useState([""]);
   const router = useRouter();
 
   const { deleteItem, addToFavorites, favorites } =
     useContext(CompaniesContext);
 
-  function companyDetailsHandler(e: any, comp: any) {
-    if (e.target.tagName === "path" || e.target.tagName === "svg") {
+  function companyDetailsHandler(e: React.MouseEvent, comp: ICompanyItem) {
+    const target = e.target as HTMLElement;
+    if (target.tagName === "path" || target.tagName === "svg") {
       return;
     }
     // setSelectedTicker(comp.ticker);
     router.push(`details/` + comp.ticker);
   }
 
-  const handleFavoriteTickers = (ticker: any) => {
+  const handleFavoriteTickers = (ticker: string) => {
     if (favoriteTickers.includes(ticker)) {
       setFavoriteTickers(
         favoriteTickers.filter((selectedTicker) => selectedTicker !== ticker)

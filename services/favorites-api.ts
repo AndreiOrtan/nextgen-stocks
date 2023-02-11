@@ -1,3 +1,5 @@
+import { FavoriteCompany } from "../types";
+
 const FAVORITES_KEY = "FAVORITE_COMPANIES";
 
 export const getFavorites = () => {
@@ -10,6 +12,6 @@ export const getFavorites = () => {
   }
 };
 
-export const saveFavorites = (items: any[]) => {
+export const saveFavorites = (items: FavoriteCompany[]) => {
   localStorage.setItem(FAVORITES_KEY, JSON.stringify(items));
 };
