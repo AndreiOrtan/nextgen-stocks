@@ -9,8 +9,10 @@ import { fetchCompanies } from "../components/api/fetchCompanies";
 
 function Home() {
   const { searchText, companies, setCompanies } = useContext(CompaniesContext);
+  console.log(companies);
 
   useEffect(() => {
+    if (!searchText) return;
     fetchCompanies(searchText).then((data) => setCompanies(data.results));
   }, [searchText, setCompanies]);
 

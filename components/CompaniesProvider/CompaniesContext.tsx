@@ -7,7 +7,7 @@ const defaultValues = {
   setCompanies: () => {},
   searchText: "",
   setSearchText: () => {},
-  favorites: [],
+  favorites: [{ ticker: "", name: "", added_on: "" }],
   deleteItem: () => {},
   addToFavorites: ({}) => {},
 };
@@ -26,7 +26,9 @@ export const Provider: FC<ProviderProps> = ({ children }) => {
 
   const addToFavorites = (company: FavoriteCompany) => {
     // construiesti arrayul nou
-    const newItems: FavoriteCompany[] = [...favorites, company];
+    const newItems: FavoriteCompany[] = favorites
+      ? [...favorites, company]
+      : [company];
     saveFavorites(newItems);
     setFavorites(newItems);
   };

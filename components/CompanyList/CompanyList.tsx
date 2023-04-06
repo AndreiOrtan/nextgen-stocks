@@ -8,7 +8,7 @@ const CompanyList = ({ companies }: Companies) => {
   if (!companies) {
     return <Spinner />;
   }
-
+  console.log("asd2");
   const renderedCompanies =
     companies &&
     companies.map((company: ICompanyItem) => {

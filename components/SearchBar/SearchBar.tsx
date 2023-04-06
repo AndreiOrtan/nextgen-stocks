@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CompaniesContext } from "../CompaniesProvider/CompaniesContext";
 import { useRouter } from "next/router";
+import { fetchCompanies } from "../api/fetchCompanies";
 
 const SearchBar = () => {
   const router = useRouter();

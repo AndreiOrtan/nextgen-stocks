@@ -46,10 +46,11 @@ const CompanyItem = ({ company, date }: CompanyItemComponent) => {
           className={`ml-auto ${styles.star}`}
           onClick={() => handleFavoriteTickers(company.ticker)}
         >
-          {favoriteTickers.includes(company.ticker) ||
-          favorites.find(
-            (favComp: any) => favComp.ticker === company.ticker
-          ) ? (
+          {favorites &&
+          (favoriteTickers.includes(company.ticker) ||
+            favorites.find(
+              (favComp: any) => favComp.ticker === company.ticker
+            )) ? (
             <AiFillStar onClick={() => deleteItem(company.ticker)} />
           ) : (
             <AiOutlineStar

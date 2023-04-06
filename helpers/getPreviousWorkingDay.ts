@@ -1,4 +1,4 @@
-const isBusinessDay = (date: any) => {
+const isBusinessDay = (date: Date) => {
   const day = date.getDay();
   if (day == 0 || day == 6) {
     return false;
