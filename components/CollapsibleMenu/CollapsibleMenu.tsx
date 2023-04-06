@@ -9,8 +9,11 @@ const CollapsibleMenu = () => {
     setOpen(!open);
   };
   return (
-    <div className="text-white">
-      <button onClick={toggle} className="flex items-center">
+    <div className="text-white mt-32">
+      <button
+        onClick={toggle}
+        className="flex items-center text-xl font-medium text-white mb-8 hover:text-gray-300"
+      >
         <p>{open ? "Hide" : "Show"} favorite companies</p>{" "}
         <span className="ml-auto">
           {open ? <FiChevronsUp /> : <FiChevronsDown />}

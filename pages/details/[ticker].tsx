@@ -8,6 +8,8 @@ import { getFormattedPreviousBusinessDay } from "../../helpers/getPreviousWorkin
 import TradingViewWidget from "../../components/TradingViewWidget";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 import React from "react";
+import Footer from "../../components/Footer/Footer";
+import styles from "./ticker.module.css";
 
 const URL = "https://api.polygon.io";
 
@@ -92,34 +94,46 @@ const CompanyDetails = () => {
 
   return (
     companyPrices && (
-      <div className="pt-8 mt-24">
-        <div className="bg-gray-900 bg-opacity-75 rounded-lg shadow-lg p-6 flex h-80">
-          <div>
-            <h3 className="text-lg font-medium text-white">
-              {companyInfo.name}
-            </h3>
-            <p className="text-gray-300">{router.query.ticker}</p>
-            <div className="price-container flex">
-              <p className="text-gray-300">{`${companyPrices.close}`}</p>
-              <p
-                className={`${
-                  +priceDiff < 0 ? "text-red-900" : "text-green-900"
-                }`}
-              >
-                {`(${priceDiff} %)`}
-              </p>
+      <div className="pt-8 mt-24 flex flex-col">
+        <div className="bg-gradient-to-r from-slate-900 to-gray-800 shadow-lg p-6 flex min-h-min mb-1 w-full">
+          <div className="w-full">
+            <div className="relative mb-1 ">
+              <div>
+                <h3 className="text-lg font-medium text-white">
+                  {companyInfo.name}
+                </h3>
+                <p className="text-gray-300">{router.query.ticker}</p>
+                <div className="price-container flex">
+                  <p className="text-gray-300">{`${companyPrices.close}`}</p>
+                  <p
+                    className={`${
+                      parseInt(priceDiff) < 0
+                        ? "text-red-900"
+                        : "text-green-900"
+                    }`}
+                  >
+                    {`(${priceDiff} %)`}
+                  </p>
+                </div>
+              </div>
+
+              <img
+                src={img}
+                alt={`${companyInfo.name}`}
+                className={`absolute top-4 right-0 w-36 ${styles.maxWidth}`}
+              />
             </div>
-            <p className="text-gray-400">{companyInfo.description}</p>
+            <p className="text-gray-400 text-justify">
+              {companyInfo.description}
+            </p>
           </div>
-          <img
-            src={img}
-            alt={`${companyInfo.name}`}
-            className="w-16 h-16 ml-auto"
-          ></img>
         </div>
-        {router.query.ticker ? (
-          <TradingViewWidget ticker={router.query.ticker} />
-        ) : null}
+        <div className="">
+          {router.query.ticker ? (
+            <TradingViewWidget ticker={router.query.ticker} />
+          ) : null}
+        </div>
+        <Footer companyInfo={companyInfo} />
       </div>
     )
   );
