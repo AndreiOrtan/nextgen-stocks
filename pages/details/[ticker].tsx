@@ -120,7 +120,7 @@ const CompanyDetails = () => {
               <img
                 src={img}
                 alt={`${companyInfo.name}`}
-                className={`absolute top-4 right-0 w-36 ${styles.maxWidth}`}
+                className={`absolute top-0 right-0 w-36 ${styles.maxWidth}`}
               />
             </div>
             <p className="text-gray-400 text-justify">
